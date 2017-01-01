@@ -1,0 +1,19 @@
+{
+  "name": "grammar-translate",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/griffinlacek/grammar-translate.git"
+  },
+  "author": "Griffin Lacek",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/griffinlacek/grammar-translate/issues"
+  },
+  "homepage": "https://github.com/griffinlacek/grammar-translate#readme"
+}

@@ -24,3 +24,18 @@ exports.translate = function(req, res) {
     res.json(data);
   });
 }
+
+/**
+* Gets Microsoft Translate supported languages
+* @param req
+* @param res
+* @returns void
+*/
+exports.languages = function(req, res) {
+  client.getLanguagesForTranslate(function(err, data) {
+    if(err) {
+      res.status(500).send(err);
+    }
+    res.json(data);
+  });
+}

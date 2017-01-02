@@ -7,10 +7,11 @@ var lt = require('node-languagetool');
 * @returns void
 */
 exports.check = function(req, res) {
-  lt.check(
-    req.body.text,
-    req.body.fromLang
-  ).then(grammar => res.json(grammar));
+  lt.check(req.body.text, req.body.fromLang)
+  .then(grammar => res.json(grammar))
+  .catch(error => {
+    res.status(500).send(error);
+  });
 }
 
 /**
@@ -20,5 +21,9 @@ exports.check = function(req, res) {
 * @returns void
 */
 exports.languages = function(req, res) {
-  lt.languages().then(langs => res.json(langs));
+  lt.languages()
+  .then(langs => res.json(langs))
+  .catch(error => {
+    res.status(500).send(error);
+  });
 }

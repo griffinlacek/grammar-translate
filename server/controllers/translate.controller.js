@@ -5,7 +5,7 @@ var client = new MsTranslator({
 }, true);
 
 /**
-* Add a new section
+* Translate user text to desired language
 * @param req
 * @param res
 * @returns void
@@ -13,10 +13,10 @@ var client = new MsTranslator({
 exports.translate = function(req, res) {
   var params = {
     text: req.body.text,
-    from: req.body.from,
-    to: req.body.to
+    from: req.body.fromLang,
+    to: req.body.toLang
   };
-  
+
   client.translate(params, function(err, data) {
     if(err) {
       res.status(500).send(err);

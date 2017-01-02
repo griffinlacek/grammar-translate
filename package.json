@@ -18,6 +18,7 @@
   "homepage": "https://github.com/griffinlacek/grammar-translate#readme",
   "dependencies": {
     "body-parser": "^1.15.2",
-    "express": "^4.14.0"
+    "express": "^4.14.0",
+    "mstranslator": "^2.1.0"
   }
 }

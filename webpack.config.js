@@ -5,7 +5,7 @@ const path = require('path');
 module.exports = {
   entry: path.join(__dirname, 'web', 'app.js'),
   output: {
-    path: path.join(__dirname, 'views', js),
+    path: path.join(__dirname, 'views', 'js'),
     filename: 'bundle.js'
   },
   module: {
@@ -19,12 +19,12 @@ module.exports = {
     }]
   },
   plugins: [
-     new Webpack.DefinePlugin({
+     new webpack.DefinePlugin({
        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
      }),
-     new.Webpack.optimize.DedupePlugin(),
-     new.Webpack.optimize.OccurenceOrderPlugin(),
-     new.Webpack.optimize.UglifyJsPlugin({
+     new webpack.optimize.DedupePlugin(),
+     new webpack.optimize.OccurenceOrderPlugin(),
+     new webpack.optimize.UglifyJsPlugin({
        compress: {warnings: false},
        mangle: true,
        sourcemap: false,

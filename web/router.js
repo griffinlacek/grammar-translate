@@ -5,7 +5,6 @@ import Layout from './components/Layout';
 import IndexPage from './components/IndexPage';
 import NotFoundPage from './components/NotFoundPage';
 
-
 const routes = (
   <Router history={browserHistory} onUpdate={() => window.scrollTo(0, 0)}>
     <Route path="/" component={Layout}>

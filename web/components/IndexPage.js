@@ -6,9 +6,18 @@ import TranslateBox from './TranslateBox';
 
 
 export default class IndexPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {  };
+  }
+
   render() {
     return (
-      <p>Initial Content</p>
+      <div className="home">
+        <LangControls />
+        <GrammarBox />
+        <TranslateBox />
+      </div>
     );
   }
 }

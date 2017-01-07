@@ -11,8 +11,11 @@ var client = new MsTranslator({
 * @returns void
 */
 exports.translate = function(req, res) {
-  if(!req.body.fromLang || !req.body.toLang) {
-    res.status(404).send('Missing languages');
+  if(!req.body.fromLang) {
+    res.status(404).send({ error: 'Missing language to translate from.' });
+  }
+  else if (!req.body.toLang) {
+    res.status(404).send({ error: 'Missing language to translate to.' });
   }
   else {
     var params = {
@@ -25,7 +28,7 @@ exports.translate = function(req, res) {
       if(err) {
         res.status(500).send(err);
       }
-      res.json(data);
+      res.json({translation: data });
     });
   }
 }

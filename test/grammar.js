@@ -18,7 +18,6 @@ describe('/POST grammar', () => {
         .post('/api/grammar')
         .send(grammarRequest)
         .end((err, res) => {
-          console.log(res.body);
           res.should.have.status(404);
           res.body.should.be.a('object');
           res.body.should.have.property('error').eql('No defined language to check.');
@@ -34,7 +33,6 @@ describe('/POST grammar', () => {
         .post('/api/grammar')
         .send(grammarRequest)
         .end((err, res) => {
-          console.log(res.body);
           res.should.have.status(200);
           res.body.should.be.a('object');
           res.body.should.have.property('matches');

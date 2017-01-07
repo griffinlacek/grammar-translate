@@ -8,7 +8,7 @@ var lt = require('node-languagetool');
 */
 exports.check = function(req, res) {
   if(!req.body.fromLang) {
-    res.status(404).send('No defined language to check.');
+    res.status(404).send({ error: 'No defined language to check.' });
   }
   else {
     lt.check(req.body.text, req.body.fromLang)

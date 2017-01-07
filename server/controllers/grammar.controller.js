@@ -7,11 +7,16 @@ var lt = require('node-languagetool');
 * @returns void
 */
 exports.check = function(req, res) {
-  lt.check(req.body.text, req.body.fromLang)
-  .then(grammar => res.json(grammar))
-  .catch(error => {
-    res.status(500).send(error);
-  });
+  if(!req.body.fromLang) {
+    res.status(404).send('No defined language to check.');
+  }
+  else {
+    lt.check(req.body.text, req.body.fromLang)
+    .then(grammar => res.json(grammar))
+    .catch(error => {
+      res.status(500).send(error);
+    });
+  }
 }
 
 /**

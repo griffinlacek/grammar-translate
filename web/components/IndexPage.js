@@ -10,9 +10,10 @@ export default class IndexPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      text: 'Type or paste your own text here to get grammar suggestions & translation to the language of your choice.',
       fromLang: 'en',
-      toLang: 'es'
+      toLang: 'es',
+      text: 'Type or paste your own text here to get grammar suggestions & translation to the language of your choice.',
+      translation: ''
     };
   }
 
@@ -51,6 +52,26 @@ export default class IndexPage extends React.Component {
     .catch(error => {
       console.log(error);
     });
+
+    fetch('/api/translate', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        text: this.state.text,
+        fromLang: this.state.fromLang,
+        toLang: this.state.toLang
+      })
+    })
+    .then(helpers.checkResponseStatus)
+    .then(helpers.parseJSON)
+    .then(json => {
+      this.setState({ translation: json.translation })
+    })
+    .catch(error => {
+      console.log(error);
+    });
   }
 
   render() {
@@ -60,13 +81,16 @@ export default class IndexPage extends React.Component {
           fromLang={this.state.fromLang}
           toLang={this.state.toLang}
           onChange={this.handleLangChange.bind(this)}
-          onClick={this.handleLangSwitch.bind(this)}/>
+          onClick={this.handleLangSwitch.bind(this)}
+        />
         <GrammarBox
           text={this.state.text}
           onChange={this.updateText.bind(this)}
           onSubmit={this.submitText.bind(this)}
-          />
-        <TranslateBox />
+        />
+        <TranslateBox
+          translation={this.state.translation}
+        />
       </div>
     );
   }

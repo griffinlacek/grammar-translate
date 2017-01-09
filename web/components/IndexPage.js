@@ -10,8 +10,20 @@ export default class IndexPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      text: 'Type or paste your own text here to get grammar suggestions & translation to the language of your choice.'
+      text: 'Type or paste your own text here to get grammar suggestions & translation to the language of your choice.',
+      fromLang: 'en',
+      toLang: 'es'
     };
+  }
+
+  handleLangChange(e) {
+    this.setState({ [e.target.className]: e.target.value });
+  }
+
+  handleLangSwitch(e) {
+    e.preventDefault();
+
+    this.setState({ fromLang: this.state.toLang, toLang: this.state.fromLang });
   }
 
   updateText(e) {
@@ -28,7 +40,7 @@ export default class IndexPage extends React.Component {
       },
       body: JSON.stringify({
         text: this.state.text,
-        fromLang: 'es'
+        fromLang: this.state.fromLang
       })
     })
     .then(helpers.checkResponseStatus)
@@ -44,7 +56,11 @@ export default class IndexPage extends React.Component {
   render() {
     return (
       <div className="home">
-        <LangControls />
+        <LangControls
+          fromLang={this.state.fromLang}
+          toLang={this.state.toLang}
+          onChange={this.handleLangChange.bind(this)}
+          onClick={this.handleLangSwitch.bind(this)}/>
         <GrammarBox
           text={this.state.text}
           onChange={this.updateText.bind(this)}

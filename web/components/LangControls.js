@@ -1,5 +1,6 @@
 // web/components/LangControls.js
 import React from 'react';
+import languages from '../data/languages';
 
 export default class LangControls extends React.Component {
   constructor(props) {
@@ -10,8 +11,9 @@ export default class LangControls extends React.Component {
     return (
       <div className="controls-container">
         <select className="fromLang" value={this.props.fromLang} onChange={this.props.onChange}>
-          <option value="en">English</option>
-          <option value="es">Spanish</option>
+          {languages.map(language => {
+            return <option key={language.code} value={language.code}>{language.name}</option>;
+          })}
         </select>
 
         <button onClick={this.props.onClick}>
@@ -19,8 +21,9 @@ export default class LangControls extends React.Component {
         </button>
 
         <select className="toLang" value={this.props.toLang} onChange={this.props.onChange}>
-          <option value="en">English</option>
-          <option value="es">Spanish</option>
+          {languages.map(language => {
+            return <option key={language.code} value={language.code}>{language.name}</option>;
+          })}
         </select>
       </div>
     );

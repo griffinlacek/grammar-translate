@@ -37,8 +37,9 @@ html, body {
 
 .grammar-container form textarea {
   width: 400px;
-  height: 330px;
   font-size: 16px;
+  resize: vertical;
+  border: none;
 }
 
 .grammar-container form textarea:focus {

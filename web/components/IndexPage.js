@@ -54,6 +54,26 @@ export default class IndexPage extends React.Component {
 
   updateText(e) {
     this.setState({ text: e.target.value });
+
+    fetch('/api/translate', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8'
+      },
+      body: JSON.stringify({
+        text: e.target.value,
+        fromLang: this.state.fromLang,
+        toLang: this.state.toLang
+      })
+    })
+    .then(helpers.checkResponseStatus)
+    .then(helpers.parseJSON)
+    .then(json => {
+      this.setState({ translation: json.translation })
+    })
+    .catch(error => {
+      console.log(error);
+    });
   }
 
   submitText(e) {
@@ -74,26 +94,6 @@ export default class IndexPage extends React.Component {
     .then(helpers.parseJSON)
     .then(json => {
       this.setState({ grammarErrors: json });
-    })
-    .catch(error => {
-      console.log(error);
-    });
-
-    fetch('/api/translate', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8'
-      },
-      body: JSON.stringify({
-        text: this.state.text,
-        fromLang: this.state.fromLang,
-        toLang: this.state.toLang
-      })
-    })
-    .then(helpers.checkResponseStatus)
-    .then(helpers.parseJSON)
-    .then(json => {
-      this.setState({ translation: json.translation })
     })
     .catch(error => {
       console.log(error);

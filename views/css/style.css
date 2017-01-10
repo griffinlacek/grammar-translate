@@ -1,0 +1,63 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: "Helvetica Neue", "Helvetica", "Arial", "Verdana", "sans-serif";
+  color: #0d3c55;
+}
+
+.app-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.header a {
+  text-decoration: none;
+  color: #0d3c55;
+}
+
+.controls-container {
+  margin-bottom: 5px;
+}
+
+.controls-container .switchLang {
+    margin: 0 10px;
+}
+
+.text-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.grammar-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.grammar-container form textarea {
+  width: 400px;
+  height: 300px;
+  font-size: 16px;
+}
+
+.grammar-container form textarea:focus {
+  outline: none;
+}
+
+.grammar-container form input {
+  width: 100px;
+  margin-top: 15px;
+  align-self: flex-end;
+}
+
+.translate-container {
+  width: 400px;
+  height: 300px;
+  margin-left: 20px;
+}
+
+.translate-container p {
+  margin: 0;
+  padding: 0;
+}

@@ -10,21 +10,23 @@ export default class LangControls extends React.Component {
   render() {
     return (
       <div className="controls-container">
-        <select className="fromLang" value={this.props.fromLang} onChange={this.props.onChange}>
-          {languages.map(language => {
-            return <option key={language.code} value={language.code}>{language.name}</option>;
-          })}
-        </select>
+        <div className="controls">
+          <select className="fromLang" value={this.props.fromLang} onChange={this.props.onChange}>
+            {languages.map(language => {
+              return <option key={language.code} value={language.code}>{language.name}</option>;
+            })}
+          </select>
 
-        <button onClick={this.props.onClick}>
-          Switch
-        </button>
+          <button className="switchLang" onClick={this.props.onClick}>
+            Switch
+          </button>
 
-        <select className="toLang" value={this.props.toLang} onChange={this.props.onChange}>
-          {languages.map(language => {
-            return <option key={language.code} value={language.code}>{language.name}</option>;
-          })}
-        </select>
+          <select className="toLang" value={this.props.toLang} onChange={this.props.onChange}>
+            {languages.map(language => {
+              return <option key={language.code} value={language.code}>{language.name}</option>;
+            })}
+          </select>
+        </div>
       </div>
     );
   }

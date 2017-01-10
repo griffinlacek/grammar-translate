@@ -83,14 +83,16 @@ export default class IndexPage extends React.Component {
           onChange={this.handleLangChange.bind(this)}
           onClick={this.handleLangSwitch.bind(this)}
         />
-        <GrammarBox
-          text={this.state.text}
-          onChange={this.updateText.bind(this)}
-          onSubmit={this.submitText.bind(this)}
-        />
-        <TranslateBox
-          translation={this.state.translation}
-        />
+      <div className="text-container">
+          <GrammarBox
+            text={this.state.text}
+            onChange={this.updateText.bind(this)}
+            onSubmit={this.submitText.bind(this)}
+          />
+          <TranslateBox
+            translation={this.state.translation}
+          />
+        </div>
       </div>
     );
   }

@@ -37,7 +37,7 @@ export default class IndexPage extends React.Component {
     fetch('/api/grammar', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json; charset=utf-8'
       },
       body: JSON.stringify({
         text: this.state.text,
@@ -56,7 +56,7 @@ export default class IndexPage extends React.Component {
     fetch('/api/translate', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json; charset=utf-8'
       },
       body: JSON.stringify({
         text: this.state.text,

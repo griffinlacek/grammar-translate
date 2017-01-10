@@ -13,6 +13,7 @@ export default class IndexPage extends React.Component {
       fromLang: 'en',
       toLang: 'es',
       text: 'Type or paste your own text here to get grammar suggestions & translation to the language of your choice.',
+      grammarErrors: {},
       translation: ''
     };
   }
@@ -24,7 +25,31 @@ export default class IndexPage extends React.Component {
   handleLangSwitch(e) {
     e.preventDefault();
 
-    this.setState({ fromLang: this.state.toLang, toLang: this.state.fromLang });
+    // Translate translation to current input language
+    fetch('/api/translate', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8'
+      },
+      body: JSON.stringify({
+        text: this.state.translation,
+        fromLang: this.state.toLang,
+        toLang: this.state.fromLang
+      })
+    })
+    .then(helpers.checkResponseStatus)
+    .then(helpers.parseJSON)
+    .then(json => {
+      // Switch translation text to input text box
+      this.setState({ text: this.state.translation });
+      // Set new translation
+      this.setState({ translation: json.translation });
+      // Switch language dropdowns
+      this.setState({ fromLang: this.state.toLang, toLang: this.state.fromLang });
+    })
+    .catch(error => {
+      console.log(error);
+    });
   }
 
   updateText(e) {
@@ -48,7 +73,7 @@ export default class IndexPage extends React.Component {
     .then(helpers.checkResponseStatus)
     .then(helpers.parseJSON)
     .then(json => {
-      console.log(json);
+      this.setState({ grammarErrors: json });
     })
     .catch(error => {
       console.log(error);

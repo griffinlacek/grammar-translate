@@ -1,4 +1,5 @@
 import React from 'react';
+import 'whatwg-fetch';
 
 class Helpers {
 
@@ -25,6 +26,34 @@ class Helpers {
   */
   parseJSON(response) {
     return response.json();
+  }
+
+  /**
+  * Returns fetch json data from /api/translate.
+  * @param text - text to be translated
+  * @param fromLang - language code to translate from
+  * @param toLang - language code to translate to
+  * @return json
+  */
+  translateFetch(text, fromLang, toLang) {
+    let response = fetch('/api/translate', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8'
+      },
+      body: JSON.stringify({
+        text: text,
+        fromLang: fromLang,
+        toLang: toLang
+      })
+    })
+    .then(this.checkResponseStatus)
+    .then(this.parseJSON)
+    .catch(error => {
+      console.log(error);
+    });
+
+    return response;
   }
 }
 

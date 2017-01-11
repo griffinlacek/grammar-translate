@@ -18,6 +18,16 @@ export default class IndexPage extends React.Component {
     };
   }
 
+  componentDidMount() {
+    helpers.translateFetch(
+      this.state.text,
+      this.state.fromLang,
+      this.state.toLang
+    ).then(json => {
+      this.setState({ translation: json.translation });
+    });
+  }
+
   handleLangChange(e) {
     this.setState({ [e.target.className]: e.target.value });
   }
@@ -26,53 +36,30 @@ export default class IndexPage extends React.Component {
     e.preventDefault();
 
     // Translate translation to current input language
-    fetch('/api/translate', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8'
-      },
-      body: JSON.stringify({
-        text: this.state.translation,
-        fromLang: this.state.toLang,
-        toLang: this.state.fromLang
-      })
-    })
-    .then(helpers.checkResponseStatus)
-    .then(helpers.parseJSON)
-    .then(json => {
+    helpers.translateFetch(
+      this.state.translation,
+      this.state.toLang,
+      this.state.fromLang
+    ).then(json => {
       // Switch translation text to input text box
       this.setState({ text: this.state.translation });
-      // Set new translation
+      
       this.setState({ translation: json.translation });
-      // Switch language dropdowns
-      this.setState({ fromLang: this.state.toLang, toLang: this.state.fromLang });
-    })
-    .catch(error => {
-      console.log(error);
     });
+
+    // Switch language dropdowns
+    this.setState({ fromLang: this.state.toLang, toLang: this.state.fromLang });
   }
 
   updateText(e) {
     this.setState({ text: e.target.value });
 
-    fetch('/api/translate', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8'
-      },
-      body: JSON.stringify({
-        text: e.target.value,
-        fromLang: this.state.fromLang,
-        toLang: this.state.toLang
-      })
-    })
-    .then(helpers.checkResponseStatus)
-    .then(helpers.parseJSON)
-    .then(json => {
-      this.setState({ translation: json.translation })
-    })
-    .catch(error => {
-      console.log(error);
+    helpers.translateFetch(
+      e.target.value,
+      this.state.fromLang,
+      this.state.toLang
+    ).then(json => {
+      this.setState({ translation: json.translation });
     });
   }
 

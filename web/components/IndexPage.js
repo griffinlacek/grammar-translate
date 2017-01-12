@@ -5,6 +5,8 @@ import GrammarBox from './GrammarBox';
 import TranslateBox from './TranslateBox';
 import 'whatwg-fetch';
 import { helpers } from '../helpers/Helpers';
+import { translation } from '../helpers/Translation';
+
 
 export default class IndexPage extends React.Component {
   constructor(props) {
@@ -43,7 +45,7 @@ export default class IndexPage extends React.Component {
     ).then(json => {
       // Switch translation text to input text box
       this.setState({ text: this.state.translation });
-      
+
       this.setState({ translation: json.translation });
     });
 
@@ -80,11 +82,14 @@ export default class IndexPage extends React.Component {
     .then(helpers.checkResponseStatus)
     .then(helpers.parseJSON)
     .then(json => {
+      let errorText = translation.insertErrors(json, this.state.text);
       this.setState({ grammarErrors: json });
+      this.setState({ text: errorText });
     })
     .catch(error => {
       console.log(error);
     });
+
   }
 
   render() {

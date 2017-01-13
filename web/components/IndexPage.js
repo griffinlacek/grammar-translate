@@ -82,7 +82,8 @@ export default class IndexPage extends React.Component {
     .then(helpers.checkResponseStatus)
     .then(helpers.parseJSON)
     .then(json => {
-      let errorText = translation.insertErrors(json, this.state.text);
+      let errorText = grammar.insertErrors(json, this.state.text);
+
       this.setState({ grammarErrors: json });
       this.setState({ text: errorText });
     })

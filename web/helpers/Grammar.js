@@ -3,24 +3,6 @@ import React from 'react';
 class Grammar {
 
   /**
-  * Adds the remaining text after the final error
-  * @param i - for loop iterator
-  * @param numErrors - Integer representing length of errors array
-  * @param text - user input text
-  * @param currOffset - offset to start substring calcuation from
-  * @param finalErrorText - final text to return to user
-  * @return
-  */
-  addPostErrorText(i, numErrors, text, currOffset, finalErrorText) {
-    if ((i + 1) == numErrors) {
-      finalErrorText += text.substr(currOffset);
-      console.log(finalErrorText);
-    }
-
-    return;
-  }
-
-  /**
   * Returns the text preceding an individual error's string representation
   * @param error - JSON object of one grammar error.
   * @param text - user input text to match errors to

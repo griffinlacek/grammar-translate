@@ -4,8 +4,9 @@ import LangControls from './LangControls';
 import GrammarBox from './GrammarBox';
 import TranslateBox from './TranslateBox';
 import 'whatwg-fetch';
+import striptags from 'striptags';
 import { helpers } from '../helpers/Helpers';
-import { translation } from '../helpers/Translation';
+import { grammar } from '../helpers/Grammar';
 
 
 export default class IndexPage extends React.Component {
@@ -68,6 +69,9 @@ export default class IndexPage extends React.Component {
   submitText(e) {
     e.preventDefault();
 
+    //Strip html tags and remove extra spaces from input text
+    let cleanText = striptags(this.state.text).replace(/\s+/g, ' ');
+
     fetch('/api/grammar', {
       method: 'POST',
       headers: {
@@ -75,14 +79,14 @@ export default class IndexPage extends React.Component {
         'mode': 'no-cors'
       },
       body: JSON.stringify({
-        text: this.state.text,
+        text: cleanText,
         fromLang: this.state.fromLang
       })
     })
     .then(helpers.checkResponseStatus)
     .then(helpers.parseJSON)
     .then(json => {
-      let errorText = grammar.insertErrors(json, this.state.text);
+      let errorText = grammar.insertErrors(json, cleanText);
 
       this.setState({ grammarErrors: json });
       this.setState({ text: errorText });

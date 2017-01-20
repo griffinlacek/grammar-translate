@@ -3,8 +3,9 @@ import React from 'react';
 import LangControls from './LangControls';
 import GrammarBox from './GrammarBox';
 import TranslateBox from './TranslateBox';
-import 'whatwg-fetch';
+import {Editor, EditorState, convertToRaw} from 'draft-js';
 import striptags from 'striptags';
+import 'whatwg-fetch';
 import { helpers } from '../helpers/Helpers';
 import { grammar } from '../helpers/Grammar';
 
@@ -17,7 +18,8 @@ export default class IndexPage extends React.Component {
       toLang: 'es',
       text: 'Type or paste your own text here to get grammar suggestions & translation to the language of your choice.',
       grammarErrors: {},
-      translation: ''
+      translation: '',
+      editorState: EditorState.createEmpty()
     };
   }
 
@@ -54,11 +56,13 @@ export default class IndexPage extends React.Component {
     this.setState({ fromLang: this.state.toLang, toLang: this.state.fromLang });
   }
 
-  updateText(e) {
-    this.setState({ text: e.target.value });
+  updateText(editorState) {
+    this.setState({ editorState });
+
+    let text = editorState.getCurrentContent().getPlainText();
 
     helpers.translateFetch(
-      e.target.value,
+      text,
       this.state.fromLang,
       this.state.toLang
     ).then(json => {
@@ -69,8 +73,9 @@ export default class IndexPage extends React.Component {
   submitText(e) {
     e.preventDefault();
 
+    let text = this.state.editorState.getCurrentContent().getPlainText();
     //Strip html tags and remove extra spaces from input text
-    let cleanText = striptags(this.state.text).replace(/\s+/g, ' ');
+    let cleanText = striptags(text).replace(/\s+/g, ' ');
 
     fetch('/api/grammar', {
       method: 'POST',
@@ -108,9 +113,9 @@ export default class IndexPage extends React.Component {
         />
       <div className="text-container">
           <GrammarBox
-            text={this.state.text}
+            editorState={this.state.editorState}
             onChange={this.updateText.bind(this)}
-            onSubmit={this.submitText.bind(this)}
+            onClick={this.submitText.bind(this)}
           />
           <TranslateBox
             translation={this.state.translation}

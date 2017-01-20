@@ -1,6 +1,6 @@
 // web/components/GrammarBox.js
 import React from 'react';
-import Textarea from 'react-textarea-autosize';
+import {Editor, EditorState} from 'draft-js';
 
 export default class GrammarBox extends React.Component {
   constructor(props) {
@@ -10,10 +10,8 @@ export default class GrammarBox extends React.Component {
   render() {
     return (
       <div className="grammar-container">
-        <form onSubmit={this.props.onSubmit}>
-          <Textarea autoFocus value={this.props.text} onChange={this.props.onChange}></Textarea>
-          <input type="submit" value="Check Text" />
-        </form>
+          <Editor editorState={this.props.editorState} onChange={this.props.onChange} />
+          <button className="submit" onClick={this.props.onClick}>Check Text</button>
       </div>
     );
   }

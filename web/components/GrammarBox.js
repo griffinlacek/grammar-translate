@@ -10,7 +10,12 @@ export default class GrammarBox extends React.Component {
   render() {
     return (
       <div className="grammar-container">
-          <Editor editorState={this.props.editorState} onChange={this.props.onChange} />
+        <div className="editor">
+          <Editor
+            editorState={this.props.editorState}
+            onChange={this.props.onChange}
+          />
+        </div>
           <button className="submit" onClick={this.props.onClick}>Check Text</button>
       </div>
     );

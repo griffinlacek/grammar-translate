@@ -30,43 +30,41 @@ html, body {
   flex-direction: row;
 }
 
-.grammar-container form {
+.grammar-container {
   display: flex;
   flex-direction: column;
-}
-
-.grammar-container form textarea {
   width: 400px;
   font-size: 16px;
-  resize: vertical;
-  border: none;
 }
 
-.grammar-container form textarea:focus {
-  outline: none;
+.grammar-container .editor {
+  border: 1px solid black;
+  padding: 10px;
 }
 
-.grammar-container form input {
-  width: 100px;
-  margin-top: 15px;
+.grammar-container button {
+  margin-top: 20px;
+  padding: 10px;
   align-self: flex-end;
+  cursor: pointer;
 }
 
 .translate-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
   width: 400px;
   margin-left: 20px;
-  padding-bottom: 50px;
-  position: relative;
 }
 
-.translate-container p {
+.translate-container .translation {
+  min-height: 18px;
   margin: 0;
-  padding: 0;
+  padding: 10px;
+  word-wrap: break-word;
+  border: 1px solid black;
 }
 
 .translate-container .msAttribution {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-
+  align-self: flex-end;
 }

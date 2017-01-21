@@ -8,25 +8,24 @@ import GrammarBox from './GrammarBox';
 import TranslateBox from './TranslateBox';
 import { helpers } from '../helpers/Helpers';
 import { grammar } from '../helpers/Grammar';
-import initText from '../data/initText';
-
+import localization from '../data/localization';
 
 export default class IndexPage extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      fromLang: 'en',
-      toLang: 'es',
+      fromLang: localization.code || 'en',
+      toLang: localization.defaultTrans || 'es',
       grammarErrors: {},
       translation: '',
-      editorState: EditorState.createWithContent(ContentState.createFromText(initText.init))
+      editorState: EditorState.createWithContent(ContentState.createFromText(localization.initInput))
     };
   }
 
   componentDidMount() {
     helpers.translateFetch(
-      initText.init,
+      localization.initInput,
       this.state.fromLang,
       this.state.toLang
     ).then(json => {

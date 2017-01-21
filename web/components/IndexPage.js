@@ -26,7 +26,7 @@ export default class IndexPage extends React.Component {
 
   componentDidMount() {
     helpers.translateFetch(
-      initText,
+      initText.init,
       this.state.fromLang,
       this.state.toLang
     ).then(json => {

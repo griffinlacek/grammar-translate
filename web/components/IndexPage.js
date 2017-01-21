@@ -1,31 +1,32 @@
 // web/components/IndexPage.js
 import React from 'react';
+import { Editor, EditorState, ContentState } from 'draft-js';
+import striptags from 'striptags';
+import 'whatwg-fetch';
 import LangControls from './LangControls';
 import GrammarBox from './GrammarBox';
 import TranslateBox from './TranslateBox';
-import {Editor, EditorState, convertToRaw} from 'draft-js';
-import striptags from 'striptags';
-import 'whatwg-fetch';
 import { helpers } from '../helpers/Helpers';
 import { grammar } from '../helpers/Grammar';
+import initText from '../data/initText';
 
 
 export default class IndexPage extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       fromLang: 'en',
       toLang: 'es',
-      text: 'Type or paste your own text here to get grammar suggestions & translation to the language of your choice.',
       grammarErrors: {},
       translation: '',
-      editorState: EditorState.createEmpty()
+      editorState: EditorState.createWithContent(ContentState.createFromText(initText.init))
     };
   }
 
   componentDidMount() {
     helpers.translateFetch(
-      this.state.text,
+      initText,
       this.state.fromLang,
       this.state.toLang
     ).then(json => {

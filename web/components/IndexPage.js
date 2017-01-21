@@ -14,6 +14,7 @@ export default class IndexPage extends React.Component {
   constructor(props) {
     super(props);
 
+    let editorState =
     this.state = {
       fromLang: localization.code || 'en',
       toLang: localization.defaultTrans || 'es',
@@ -47,8 +48,12 @@ export default class IndexPage extends React.Component {
       this.state.fromLang
     ).then(json => {
       // Switch translation text to input text box
-      this.setState({ text: this.state.translation });
+      const editorState = EditorState.push(
+        this.state.editorState,
+        ContentState.createFromText(this.state.translation)
+      );
 
+      this.setState({ editorState });
       this.setState({ translation: json.translation });
     });
 
@@ -111,7 +116,7 @@ export default class IndexPage extends React.Component {
           onChange={this.handleLangChange.bind(this)}
           onClick={this.handleLangSwitch.bind(this)}
         />
-      <div className="text-container">
+        <div className="text-container">
           <GrammarBox
             editorState={this.state.editorState}
             onChange={this.updateText.bind(this)}

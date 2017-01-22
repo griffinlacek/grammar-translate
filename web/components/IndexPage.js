@@ -14,13 +14,16 @@ export default class IndexPage extends React.Component {
   constructor(props) {
     super(props);
 
-    let editorState =
+    let contentState = ContentState.createFromText(localization.initInput);
+    let editorState = EditorState.createWithContent(contentState);
+    editorState = EditorState.moveFocusToEnd(editorState);
+
     this.state = {
-      fromLang: localization.code || 'en',
-      toLang: localization.defaultTrans || 'es',
+      fromLang: localization.code,
+      toLang: localization.defaultTrans,
       grammarErrors: {},
       translation: '',
-      editorState: EditorState.createWithContent(ContentState.createFromText(localization.initInput))
+      editorState: editorState
     };
   }
 
@@ -36,6 +39,23 @@ export default class IndexPage extends React.Component {
 
   handleLangChange(e) {
     this.setState({ [e.target.className]: e.target.value });
+
+    // Move focus to end of editor and set new state
+    let editorState = EditorState.moveFocusToEnd(this.state.editorState);
+    this.setState({ editorState });
+
+    // Translate editor content if toLang is changed
+    if( e.target.className === 'toLang') {
+      let currentText = editorState.getCurrentContent().getPlainText();
+
+      helpers.translateFetch(
+        currentText,
+        this.state.fromLang,
+        e.target.value
+      ).then(json => {
+        this.setState({ translation: json.translation });
+      });
+    }
   }
 
   handleLangSwitch(e) {
@@ -47,11 +67,13 @@ export default class IndexPage extends React.Component {
       this.state.toLang,
       this.state.fromLang
     ).then(json => {
-      // Switch translation text to input text box
-      const editorState = EditorState.push(
+      // Switch translation text to editor
+      let editorState = EditorState.push(
         this.state.editorState,
         ContentState.createFromText(this.state.translation)
       );
+
+      editorState = EditorState.moveFocusToEnd(editorState);
 
       this.setState({ editorState });
       this.setState({ translation: json.translation });
@@ -64,10 +86,10 @@ export default class IndexPage extends React.Component {
   updateText(editorState) {
     this.setState({ editorState });
 
-    let text = editorState.getCurrentContent().getPlainText();
+    let currentText = editorState.getCurrentContent().getPlainText();
 
     helpers.translateFetch(
-      text,
+      currentText,
       this.state.fromLang,
       this.state.toLang
     ).then(json => {
@@ -104,7 +126,6 @@ export default class IndexPage extends React.Component {
     .catch(error => {
       console.log(error);
     });
-
   }
 
   render() {

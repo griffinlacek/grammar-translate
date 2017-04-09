@@ -1,4 +1,4 @@
-#grammar-translate
+# Grammar-Translate
 
 Blends <a href="https://www.languagetool.org/">Language Tool</a>, an open source language based grammar checker with <a href="https://www.microsoft.com/en-us/translator/translatorapi.aspx">Microsoft Translate</a> to allow language learners to practice writing in 20 different languages with grammar corrections and a language translation of their choice.
 
